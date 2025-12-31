@@ -1,0 +1,29 @@
+function clearPass() {
+            codeInput = "";
+            document.getElementById('pass-display').innerText = "_ _ _ _";
+        }
+
+        function showTab(t) {
+            const area = document.getElementById('display-area');
+            if (t === 'photos') {
+                area.innerHTML = 
+                    <div class="gallery-grid">
+                        <img src="images/1.jpg" class="gallery-img">
+                        <img src="images/2.jpg" class="gallery-img">
+                        <img src="images/3.jpg" class="gallery-img">
+                        <img src="images/4.jpg" class="gallery-img">
+                    </div>
+                ;
+            } else if (t === 'letter') {
+                area.innerHTML = 
+                    <div class="letter-box">
+                        <p><strong>Dear Friend,</strong></p>
+                        <p>Write your beautiful message here! Tell them how much they mean to you and wish them the best birthday ever.</p>
+                        <p>With love, <br> [Your Name]</p>
+                    </div>
+                ;
+            }
+        }
+    </script>
+</body>
+</html>
