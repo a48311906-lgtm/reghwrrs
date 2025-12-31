@@ -1,4 +1,80 @@
-function clearPass() {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Virtual Gift</title>
+    <style>
+        body { background-color: #fce4ec; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { width: 95%; max-width: 400px; text-align: center; padding: 20px; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .hidden { display: none !important; }
+        .pass-display { font-size: 28px; margin: 20px 0; letter-spacing: 8px; font-weight: bold; color: #f48fb1; min-height: 40px; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        button.num-btn { padding: 20px; border: none; border-radius: 15px; background: #f8bbd0; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
+        
+        /* Gift Section Styles */
+        .tabs { display: flex; justify-content: space-around; margin-bottom: 20px; }
+        .tab-btn { background: #fce4ec; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .gallery-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; border: 2px solid #fce4ec; }
+        .letter-box { text-align: left; line-height: 1.6; color: #555; background: #fff9fb; padding: 15px; border-radius: 10px; border: 1px dashed #f48fb1; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="container">
+        <div class="card">
+            <h2 style="color: #d81b60;">Enter Code</h2>
+            <div id="pass-display" class="pass-display">_ _ _ _</div>
+            <div class="keypad">
+                <button class="num-btn" onclick="press(1)">1</button>
+                <button class="num-btn" onclick="press(2)">2</button>
+                <button class="num-btn" onclick="press(3)">3</button>
+                <button class="num-btn" onclick="press(4)">4</button>
+                <button class="num-btn" onclick="press(5)">5</button>
+                <button class="num-btn" onclick="press(6)">6</button>
+                <button class="num-btn" onclick="press(7)">7</button>
+                <button class="num-btn" onclick="press(8)">8</button>
+                <button class="num-btn" onclick="press(9)">9</button>
+                <button class="num-btn" onclick="clearPass()" style="background:#f48fb1;">C</button>
+                <button class="num-btn" onclick="press(0)">0</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gift-content" class="container hidden">
+        <div class="card">
+            <h2 style="color: #d81b60;">Happy Birthday! ✨</h2>
+            <div class="tabs">
+                <button class="tab-btn" onclick="showTab('photos')">🖼️ Photos</button>
+                <button class="tab-btn" onclick="showTab('letter')">✉️ My Letter</button>
+            </div>
+            <div id="display-area"></div>
+        </div>
+    </div>
+
+    <script>
+        let codeInput = "";
+        const secretCode = "1234"; // CHANGE THIS
+
+        function press(num) {
+            if (codeInput.length < 4) {
+                codeInput += num;
+                document.getElementById('pass-display').innerText = "*".repeat(codeInput.length);
+            }
+            if (codeInput.length === 4) {
+                if (codeInput === secretCode) {
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('gift-content').classList.remove('hidden');
+                    showTab('photos');
+                } else {
+                    document.getElementById('pass-display').innerText = "WRONG";
+                    setTimeout(clearPass, 1000);
+                }
+            }
+        }
+                function clearPass() {
             codeInput = "";
             document.getElementById('pass-display').innerText = "_ _ _ _";
         }
