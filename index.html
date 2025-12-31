@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gift for My Buddy</title>
+    <style>
+        body { background-color: #fce4ec; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { width: 95%; max-width: 400px; text-align: center; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .hidden { display: none !important; }
+        .pass-display { font-size: 28px; margin: 20px 0; letter-spacing: 8px; font-weight: bold; color: #f48fb1; min-height: 40px; border-bottom: 2px solid #f8bbd0; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        button.num-btn { padding: 20px; border: none; border-radius: 15px; background: #f8bbd0; font-weight: bold; cursor: pointer; font-size: 1.2rem; touch-action: manipulation; }
+        button.num-btn:active { background: #f06292; color: white; transform: scale(0.9); }
+        .tabs { display: flex; justify-content: space-around; margin: 20px 0; gap: 10px; }
+        .tab-btn { background: #fce4ec; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; flex: 1; }
+        .content-box { text-align: left; background: #fff9fb; padding: 20px; border-radius: 12px; border: 1px dashed #f48fb1; color: #444; min-height: 150px; }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .gallery-img { width: 100%; height: 100px; object-fit: cover; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="container">
+        <div class="card">
+            <h2 style="color: #d81b60;">Enter Code</h2>
+            <div id="pass-display" class="pass-display">_ _ _ _</div>
+            <div class="keypad">
+                <button class="num-btn" onclick="press(1)">1</button>
+                <button class="num-btn" onclick="press(2)">2</button>
+                <button class="num-btn" onclick="press(3)">3</button>
+                <button class="num-btn" onclick="press(4)">4</button>
+                <button class="num-btn" onclick="press(5)">5</button>
+                <button class="num-btn" onclick="press(6)">6</button>
+                <button class="num-btn" onclick="press(7)">7</button>
+                <button class="num-btn" onclick="press(8)">8</button>
+                <button class="num-btn" onclick="press(9)">9</button>
+                <button class="num-btn" onclick="clearPass()" style="background:#f48fb1;">C</button>
+                <button class="num-btn" onclick="press(0)">0</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="gift-content" class="container hidden">
+        <div class="card">
+            <h2 style="color: #d81b60;">Surprise Buddy! ✨</h2>
+            <nav class="tabs">
+                <button class="tab-btn" onclick="showTab('message')">✉️ Message</button>
+                <button class="tab-btn" onclick="showTab('gift')">🎁 Gift</button>
+            </nav>
+            <div id="display-area" class="content-box"></div>
+        </div>
+    </div>
+
+    <script>
+        let inputString = "";
+        const secret = "1234"; // YOUR PASSCODE
+
+        function press(num) {
+            if (inputString.length < 4) {
+                inputString += num;
+                document.getElementById('pass-display').innerText = "*".repeat(inputString.length);
+            }
+            if (inputString.length === 4) {
+                if (inputString === secret) {
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('gift-content').classList.remove('hidden');
+                  showTab('message');
+                } else {
+                    document.getElementById('pass-display').innerText = "WRONG";
+                    setTimeout(clearPass, 1000);
+                }
+            }
+        }
+
+        function clearPass() {
+            inputString = "";
+            document.getElementById('pass-display').innerText = "_ _ _ _";
+        }
+
+        function showTab(type) {
+            const area = document.getElementById('display-area');
+            if (type === 'message') {
+                area.innerHTML = 
+                    <p><strong>Dear Buddy,</strong></p>
+                    <p>Happy Birthday! I wanted to send you something way cooler than just a text message.</p>
+                    <p>You've been such a great friend, and I hope this year brings you all the success and joy in the world!</p>
+                    <p>Enjoy your special day!</p>
+                ;
+            } else if (type === 'gift') {
+                area.innerHTML = 
+                    <div style="text-align:center;">
+                        <h3>Our Memories 🎁</h3>
+                        <div class="gallery-grid">
+                            <img src="images/1.jpg" class="gallery-img" alt="Photo 1">
+                            <img src="images/2.jpg" class="gallery-img" alt="Photo 2">
+                            <img src="images/3.jpg" class="gallery-img" alt="Photo 3">
+                            <img src="images/4.jpg" class="gallery-img" alt="Photo 4">
+                        </div>
+                    </div>
+                ;
+            }
+        }
+    </script>
+</body>
+</html>
