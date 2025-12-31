@@ -6,19 +6,16 @@
     <title>Virtual Gift</title>
     <style>
         body { background-color: #fce4ec; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { width: 95%; max-width: 400px; text-align: center; padding: 20px; }
+        .container { width: 95%; max-width: 400px; text-align: center; }
         .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .hidden { display: none !important; }
-        .pass-display { font-size: 28px; margin: 20px 0; letter-spacing: 8px; font-weight: bold; color: #f48fb1; min-height: 40px; }
+        .pass-display { font-size: 28px; margin: 20px 0; letter-spacing: 8px; font-weight: bold; color: #f48fb1; min-height: 40px; border-bottom: 2px solid #f8bbd0; }
         .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        button.num-btn { padding: 20px; border: none; border-radius: 15px; background: #f8bbd0; font-weight: bold; cursor: pointer; font-size: 1.2rem; }
-        
-        /* Gift Section Styles */
-        .tabs { display: flex; justify-content: space-around; margin-bottom: 20px; }
+        button.num-btn { padding: 20px; border: none; border-radius: 15px; background: #f8bbd0; font-weight: bold; cursor: pointer; font-size: 1.2rem; touch-action: manipulation; }
+        button.num-btn:active { background: #f06292; color: white; transform: scale(0.9); }
+        .tabs { display: flex; justify-content: space-around; margin: 20px 0; }
         .tab-btn { background: #fce4ec; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .gallery-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; border: 2px solid #fce4ec; }
-        .letter-box { text-align: left; line-height: 1.6; color: #555; background: #fff9fb; padding: 15px; border-radius: 10px; border: 1px dashed #f48fb1; }
+        .letter-box { text-align: left; background: #fff9fb; padding: 15px; border-radius: 10px; border: 1px dashed #f48fb1; color: #555; }
     </style>
 </head>
 <body>
@@ -46,17 +43,17 @@
     <div id="gift-content" class="container hidden">
         <div class="card">
             <h2 style="color: #d81b60;">Happy Birthday! ✨</h2>
-            <div class="tabs">
-                <button class="tab-btn" onclick="showTab('photos')">🖼️ Photos</button>
-                <button class="tab-btn" onclick="showTab('letter')">✉️ My Letter</button>
-            </div>
+            <nav class="tabs">
+                <button class="tab-btn" onclick="showTab('letter')">📩 Message</button>
+                <button class="tab-btn" onclick="showTab('gift')">🎁 Gift</button>
+            </nav>
             <div id="display-area"></div>
         </div>
     </div>
 
     <script>
         let codeInput = "";
-        const secretCode = "1234"; // CHANGE THIS
+        const secretCode = "1234"; // CHANGE THIS IF NEEDED
 
         function press(num) {
             if (codeInput.length < 4) {
@@ -67,39 +64,36 @@
                 if (codeInput === secretCode) {
                     document.getElementById('login-screen').classList.add('hidden');
                     document.getElementById('gift-content').classList.remove('hidden');
-                    showTab('photos');
+                    showTab('letter');
                 } else {
                     document.getElementById('pass-display').innerText = "WRONG";
                     setTimeout(clearPass, 1000);
                 }
             }
         }
-                function clearPass() {
+
+        function clearPass() {
             codeInput = "";
             document.getElementById('pass-display').innerText = "_ _ _ _";
         }
-
-        function showTab(t) {
+            function showTab(t) {
             const area = document.getElementById('display-area');
-            if (t === 'photos') {
-                area.innerHTML = 
-                    <div class="gallery-grid">
-                        <img src="images/1.jpg" class="gallery-img">
-                        <img src="images/2.jpg" class="gallery-img">
-                        <img src="images/3.jpg" class="gallery-img">
-                        <img src="images/4.jpg" class="gallery-img">
-                    </div>
-                ;
-            } else if (t === 'letter') {
+            if (t === 'letter') {
                 area.innerHTML = 
                     <div class="letter-box">
-                        <p><strong>Dear Friend,</strong></p>
-                        <p>Write your beautiful message here! Tell them how much they mean to you and wish them the best birthday ever.</p>
+                        <p><strong>Dear Buddy,</strong></p>
+                        <p>Happy Birthday! I am so glad we are friends. You deserve the best day ever! I hope you like this little virtual surprise I built for you.</p>
                         <p>With love, <br> [Your Name]</p>
-                    </div>
-                ;
+                    </div>;
+            } else if (t === 'gift') {
+                area.innerHTML = 
+                    <div style="padding:10px;">
+                        <h3>A little gift for you...</h3>
+                        <p>Imagine your favorite gift is right here! 🎁✨</p>
+                    </div>;
             }
         }
     </script>
 </body>
 </html>
+        }
